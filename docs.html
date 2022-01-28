@@ -1,0 +1,681 @@
+<!doctype html>
+<html>
+<head>
+  
+  <title>Continuous index protocol - White paper documentation</title>
+
+  <!-- Meta -->
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Continuous index protocol - White paper documentation ">
+  <meta name="author" content="Continuous index">
+  
+  <link rel="shortcut icon" type="image/x-icon" href="img/icos-coins/CI.png">
+
+  <meta name="robots" content="noarchive"/>
+
+
+  <!-- Baskerville Font -->
+  <link href="./lib/font-Baskerville/Baskerville.css" rel="stylesheet">
+
+  <!-- Primer --> 
+  <link rel="stylesheet" id="primer_css">
+  
+  <script type="text/javascript">
+        var microTime = Date.now();
+        //primer_css.href = './lib/primer/primer.css' + '?v=' + microTime;
+        primer_css.href = './lib/primer/primer.reduced.docs.css' + '?v=' + microTime;
+  </script> 
+
+  <!--Code prettify-->
+  <script src="./lib/prettify/run_prettify.js"></script>  
+  
+  <!-- JQuery --> 
+  <script src="./lib/jquery/jquery.min.js"></script> 
+  <script src="./lib/jquery/jquery.scrollTo.min.js"></script>
+  
+
+  <script id="docs_script" type="text/javascript"></script>
+
+  <script type="text/javascript">
+        var microTime = Date.now();
+        docs_script.src = './lib/whitepaper/docs-2.js' + '?v=' + microTime;
+  </script>
+  
+  
+  
+  
+  <style>
+
+
+    body{ font-size: 14px;  /*line-height : 18px;*/ background: none; }
+    
+    .tx-Baskerville {
+      font-family: 'Libre Baskerville', serif;
+      font-size: 15px;
+    }
+    .h-Baskerville  { font-family: 'Libre Baskerville', serif;  }
+    .tx-Times {
+        font-family: 'Times New Roman', serif;
+        font-size: 18px; 
+    }
+
+    div{ /*position:relative;*/ }
+    .preventDefault{ cursor: default;}
+    .bg{
+      position: absolute; top:0; bottom:0;
+      background-image: url("img/bg.png?v=1"); 
+      background-size:  cover;
+      background-repeat: repeat-y;
+      background-position: top center;
+      background-size: 100%; 
+      width: 100%; 
+      overflow: hidden;
+      opacity: 0.2;
+      z-index: -1;
+    }
+    .bg_before {
+      position: absolute; top:0; bottom:0;
+      background-size:  cover;
+      background-repeat: repeat-y;
+      background-position: top center;
+      background-size: 100%; 
+      width: 100%; 
+      overflow: hidden;
+      opacity: 1;
+      z-index: -2;
+    } 
+    
+    .tLink{ font-size: 16px; cursor: pointer; }
+    .tLink:hover{ color:mediumpurple; fill:mediumpurple; }
+    .tLink:active{ color:blue; fill:blue; }
+    
+    .pointer-2:hover{ cursor: pointer; text-shadow: rgba(0,255,153,0.99) 0px 0px 8px ;}
+
+    
+    /* Pretty printing styles. Used with prettify.js. */
+    pre .str, code .str { color: #65B042; } /* string  - green */
+    pre .kwd, code .kwd { color: #E28964; } /* keyword - dark pink */
+    pre .com, code .com { color: #AEAEAE; font-style: italic; } /* comment - gray */
+    pre .typ, code .typ { color: #89bdff; } /* type - light blue */
+    pre .lit, code .lit { color: #3387CC; } /* literal - blue */
+    pre .pun, code .pun { color: #999; } /* punctuation - white */
+    pre .pln, code .pln { color: #27a036; } /* plaintext - white */
+    pre .tag, code .tag { color: #89bdff; } /* html/xml tag    - light blue */
+    pre .atn, code .atn { color: #bdb76b; } /* html/xml attribute name  - khaki */
+    pre .atv, code .atv { color: #65B042; } /* html/xml attribute value - green */
+    pre .dec, code .dec { color: #3387CC; } /* decimal - blue */
+
+    pre .pln:last-child { display: none; }
+    
+    pre.prettyprint, code.prettyprint {
+      background-color: rgba(143,141,141,0.00);
+      border:0;
+      overflow: hidden;
+      text-overflow: ellipsis;    
+    }
+    pre.prettyprint {
+        /*padding: 0px !important;*/
+        border: 0px !important;
+      white-space: pre-wrap;
+    }
+
+    /* Specify class=linenums on a pre to get line numbering */
+    ol.linenums { margin-top: 0; margin-bottom: 0; color: #AEAEAE; } /* IE indents via margin-left */
+    li.L0,li.L1,li.L2,li.L3,li.L5,li.L6,li.L7,li.L8 { list-style-type: none }
+    /* Alternate shading for lines */
+    li.L1,li.L3,li.L5,li.L7,li.L9 { }
+
+    @media print {
+      pre .str, code .str { color: #060; }
+      pre .kwd, code .kwd { color: #006; font-weight: bold; }
+      pre .com, code .com { color: #600; font-style: italic; }
+      pre .typ, code .typ { color: #404; font-weight: bold; }
+      pre .lit, code .lit { color: #044; }
+      pre .pun, code .pun { color: #440; }
+      pre .pln, code .pln { color: #000; }
+      pre .tag, code .tag { color: #006; font-weight: bold; }
+      pre .atn, code .atn { color: #404; }
+      pre .atv, code .atv { color: #060; }
+    }
+    .noselect {
+      -webkit-touch-callout: none; /* iOS Safari */
+        -webkit-user-select: none; /* Safari */
+         -khtml-user-select: none; /* Konqueror HTML */
+           -moz-user-select: none; /* Old versions of Firefox */
+            -ms-user-select: none; /* Internet Explorer/Edge */
+                user-select: none; /* Non-prefixed version, currently
+                                      supported by Chrome, Edge, Opera and Firefox */
+    }    
+  </style>
+
+  
+  <script>
+    
+
+
+  </script>
+  
+</head>
+
+<body>
+  
+  <div class="bg_before"></div>  
+  <div class="bg"></div>  
+
+  <div id="AllContent" class="mt-8 noselect">  
+  
+  <div class="Header position-fixed top-0 left-0 right-0">
+      <div class="Header-item">
+        <a href="./" class="Header-link f4 d-flex flex-items-center ml-1">
+            
+            <svg width="35" height="35" viewBox="0 0 185 185" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M0.502686 92.3694L92.2512 184.468L111.987 164.808L20.2381 72.709L0.502686 92.3694Z" fill="#9933FF"/>
+            <path d="M72.866 20.281L0.502819 92.3691L20.1632 112.105L92.5264 40.0164L72.866 20.281Z" fill="#9933FF"/>
+            <path d="M72.866 20.281L92.5264 40.0164L112.262 20.356L92.6014 0.620603L72.866 20.281Z" fill="white"/>
+            <path d="M92.5264 40.0166L164.615 112.38L184.35 92.7193L112.262 20.3562L92.5264 40.0166Z" fill="#16F683"/>
+            <path d="M144.954 92.6442L72.5907 164.732L92.2511 184.468L164.614 112.38L144.954 92.6442Z" fill="#9933FF"/>
+            </svg>
+            
+            
+            <span class="ml-3 mr-1 mt-1"><svg height="33" viewBox="0 0 470 87" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M25.7812 26.3438C23.2604 26.3438 20.9896 26.7812 18.9688 27.6562C16.9688 28.5104 15.2604 29.7604 13.8438 31.4062C12.4479 33.0312 11.375 35 10.625 37.3125C9.875 39.625 9.5 42.2292 9.5 45.125C9.5 48.9583 10.0938 52.2917 11.2812 55.125C12.4896 57.9375 14.2812 60.1146 16.6562 61.6562C19.0521 63.1979 22.0417 63.9688 25.625 63.9688C27.6667 63.9688 29.5833 63.8021 31.375 63.4688C33.1875 63.1146 34.9479 62.6771 36.6562 62.1562V66.7812C34.9896 67.4062 33.2396 67.8646 31.4062 68.1562C29.5729 68.4688 27.3958 68.625 24.875 68.625C20.2292 68.625 16.3438 67.6667 13.2188 65.75C10.1146 63.8125 7.78125 61.0833 6.21875 57.5625C4.67708 54.0417 3.90625 49.8854 3.90625 45.0938C3.90625 41.6354 4.38542 38.4792 5.34375 35.625C6.32292 32.75 7.73958 30.2708 9.59375 28.1875C11.4688 26.1042 13.7604 24.5 16.4688 23.375C19.1979 22.2292 22.3229 21.6562 25.8438 21.6562C28.1562 21.6562 30.3854 21.8854 32.5312 22.3438C34.6771 22.8021 36.6146 23.4583 38.3438 24.3125L36.2188 28.8125C34.7604 28.1458 33.1562 27.5729 31.4062 27.0938C29.6771 26.5938 27.8021 26.3438 25.7812 26.3438ZM71.565 50.9688C71.565 53.5938 71.2421 55.9896 70.5962 58.1562C69.9504 60.3021 68.9921 62.1562 67.7212 63.7188C66.4504 65.2812 64.8671 66.4896 62.9712 67.3438C61.0962 68.1979 58.9087 68.625 56.4087 68.625C54.0337 68.625 51.9192 68.2083 50.065 67.375C48.2108 66.5208 46.6379 65.3125 45.3462 63.75C44.0754 62.1875 43.1067 60.3333 42.44 58.1875C41.7733 56.0208 41.44 53.6146 41.44 50.9688C41.44 47.3229 42.0442 44.1875 43.2525 41.5625C44.4817 38.9167 46.2317 36.8958 48.5025 35.5C50.7942 34.0833 53.5337 33.375 56.7212 33.375C60.0129 33.375 62.7525 34.125 64.94 35.625C67.1483 37.1042 68.8046 39.1667 69.9087 41.8125C71.0129 44.4583 71.565 47.5104 71.565 50.9688ZM44.69 50.9688C44.69 53.9479 45.1171 56.5521 45.9712 58.7812C46.8254 61.0104 48.1171 62.75 49.8462 64C51.5962 65.25 53.8046 65.875 56.4712 65.875C59.2004 65.875 61.44 65.25 63.19 64C64.94 62.75 66.2317 61 67.065 58.75C67.8983 56.5 68.315 53.9062 68.315 50.9688C68.315 48.1146 67.9192 45.5729 67.1275 43.3438C66.3358 41.1146 65.0858 39.3646 63.3775 38.0938C61.6692 36.8021 59.44 36.1562 56.69 36.1562C52.7525 36.1562 49.7629 37.4688 47.7212 40.0938C45.7004 42.7188 44.69 46.3438 44.69 50.9688ZM93.3487 33.375C97.1612 33.375 100.088 34.375 102.13 36.375C104.172 38.375 105.192 41.5104 105.192 45.7812V68H102.067V45.9688C102.067 42.5938 101.297 40.1146 99.755 38.5312C98.2133 36.9479 95.9737 36.1562 93.0362 36.1562C89.3071 36.1562 86.4529 37.25 84.4737 39.4375C82.5154 41.6042 81.5362 44.8854 81.5362 49.2812V68H78.38V34.0312H80.9425L81.4112 40.2188H81.5987C82.2029 38.9479 83.0258 37.8021 84.0675 36.7812C85.13 35.7396 86.4321 34.9167 87.9737 34.3125C89.5154 33.6875 91.3071 33.375 93.3487 33.375ZM122.82 65.9062C123.799 65.9062 124.705 65.8333 125.539 65.6875C126.393 65.5417 127.143 65.3542 127.789 65.125V67.75C127.122 67.9792 126.341 68.1771 125.445 68.3438C124.549 68.5312 123.56 68.625 122.476 68.625C120.56 68.625 118.966 68.2708 117.695 67.5625C116.424 66.8333 115.466 65.7396 114.82 64.2812C114.174 62.8021 113.851 60.9271 113.851 58.6562V36.6562H108.789V34.7812L113.82 33.8125L114.914 25.8125H117.007V34.0312H127.601V36.6562H117.007V58.4688C117.007 60.9062 117.455 62.7604 118.351 64.0312C119.268 65.2812 120.757 65.9062 122.82 65.9062ZM135.666 34.0312V68H132.51V34.0312H135.666ZM134.135 21.4688C134.927 21.4688 135.51 21.7083 135.885 22.1875C136.26 22.6458 136.448 23.2708 136.448 24.0625C136.448 24.8542 136.26 25.4792 135.885 25.9375C135.51 26.3958 134.927 26.625 134.135 26.625C133.385 26.625 132.823 26.3958 132.448 25.9375C132.073 25.4792 131.885 24.8542 131.885 24.0625C131.885 23.2708 132.073 22.6458 132.448 22.1875C132.823 21.7083 133.385 21.4688 134.135 21.4688ZM159.419 33.375C163.231 33.375 166.158 34.375 168.2 36.375C170.242 38.375 171.262 41.5104 171.262 45.7812V68H168.137V45.9688C168.137 42.5938 167.367 40.1146 165.825 38.5312C164.283 36.9479 162.044 36.1562 159.106 36.1562C155.377 36.1562 152.523 37.25 150.544 39.4375C148.585 41.6042 147.606 44.8854 147.606 49.2812V68H144.45V34.0312H147.012L147.481 40.2188H147.669C148.273 38.9479 149.096 37.8021 150.137 36.7812C151.2 35.7396 152.502 34.9167 154.044 34.3125C155.585 33.6875 157.377 33.375 159.419 33.375ZM206.109 34.0312V68H203.546L203.077 61.875H202.89C202.307 63.125 201.484 64.2604 200.421 65.2812C199.359 66.3021 198.057 67.1146 196.515 67.7188C194.973 68.3229 193.182 68.625 191.14 68.625C188.536 68.625 186.348 68.1771 184.577 67.2812C182.827 66.3646 181.505 64.9896 180.609 63.1562C179.713 61.3229 179.265 59.0312 179.265 56.2812V34.0312H182.421V55.9688C182.421 59.3646 183.182 61.8646 184.702 63.4688C186.244 65.0729 188.494 65.875 191.452 65.875C193.952 65.875 196.046 65.3958 197.734 64.4375C199.442 63.4792 200.734 62.0312 201.609 60.0938C202.505 58.1354 202.952 55.6979 202.952 52.7812V34.0312H206.109ZM243.143 50.9688C243.143 53.5938 242.82 55.9896 242.174 58.1562C241.528 60.3021 240.57 62.1562 239.299 63.7188C238.028 65.2812 236.445 66.4896 234.549 67.3438C232.674 68.1979 230.486 68.625 227.986 68.625C225.611 68.625 223.497 68.2083 221.643 67.375C219.788 66.5208 218.215 65.3125 216.924 63.75C215.653 62.1875 214.684 60.3333 214.018 58.1875C213.351 56.0208 213.018 53.6146 213.018 50.9688C213.018 47.3229 213.622 44.1875 214.83 41.5625C216.059 38.9167 217.809 36.8958 220.08 35.5C222.372 34.0833 225.111 33.375 228.299 33.375C231.59 33.375 234.33 34.125 236.518 35.625C238.726 37.1042 240.382 39.1667 241.486 41.8125C242.59 44.4583 243.143 47.5104 243.143 50.9688ZM216.268 50.9688C216.268 53.9479 216.695 56.5521 217.549 58.7812C218.403 61.0104 219.695 62.75 221.424 64C223.174 65.25 225.382 65.875 228.049 65.875C230.778 65.875 233.018 65.25 234.768 64C236.518 62.75 237.809 61 238.643 58.75C239.476 56.5 239.893 53.9062 239.893 50.9688C239.893 48.1146 239.497 45.5729 238.705 43.3438C237.913 41.1146 236.663 39.3646 234.955 38.0938C233.247 36.8021 231.018 36.1562 228.268 36.1562C224.33 36.1562 221.34 37.4688 219.299 40.0938C217.278 42.7188 216.268 46.3438 216.268 50.9688ZM276.364 34.0312V68H273.801L273.333 61.875H273.145C272.562 63.125 271.739 64.2604 270.676 65.2812C269.614 66.3021 268.312 67.1146 266.77 67.7188C265.228 68.3229 263.437 68.625 261.395 68.625C258.791 68.625 256.603 68.1771 254.833 67.2812C253.083 66.3646 251.76 64.9896 250.864 63.1562C249.968 61.3229 249.52 59.0312 249.52 56.2812V34.0312H252.676V55.9688C252.676 59.3646 253.437 61.8646 254.958 63.4688C256.499 65.0729 258.749 65.875 261.708 65.875C264.208 65.875 266.301 65.3958 267.989 64.4375C269.697 63.4792 270.989 62.0312 271.864 60.0938C272.76 58.1354 273.208 55.6979 273.208 52.7812V34.0312H276.364ZM306.46 59.0938C306.46 61.1146 305.95 62.8438 304.929 64.2812C303.929 65.6979 302.46 66.7812 300.522 67.5312C298.585 68.2604 296.2 68.625 293.366 68.625C291.012 68.625 288.908 68.4167 287.054 68C285.2 67.5833 283.647 67.0729 282.397 66.4688V63.3438C283.96 64.1146 285.689 64.7396 287.585 65.2188C289.481 65.6979 291.429 65.9375 293.429 65.9375C296.929 65.9375 299.45 65.3438 300.991 64.1562C302.533 62.9688 303.304 61.3438 303.304 59.2812C303.304 57.9271 302.918 56.8125 302.147 55.9375C301.397 55.0417 300.314 54.2708 298.897 53.625C297.481 52.9792 295.772 52.3229 293.772 51.6562C291.689 50.9479 289.835 50.25 288.21 49.5625C286.606 48.8542 285.345 47.9271 284.429 46.7812C283.512 45.6146 283.054 44.0312 283.054 42.0312C283.054 39.3021 284.147 37.1771 286.335 35.6562C288.522 34.1354 291.46 33.375 295.147 33.375C297.189 33.375 299.085 33.5729 300.835 33.9688C302.606 34.3438 304.21 34.8333 305.647 35.4375L304.522 38.125C303.231 37.5208 301.741 37.0312 300.054 36.6562C298.366 36.2812 296.679 36.0938 294.991 36.0938C292.22 36.0938 290.054 36.5833 288.491 37.5625C286.929 38.5417 286.147 39.9792 286.147 41.875C286.147 43.3333 286.522 44.4792 287.272 45.3125C288.022 46.125 289.095 46.8125 290.491 47.375C291.887 47.9167 293.543 48.5208 295.46 49.1875C297.439 49.875 299.262 50.5938 300.929 51.3438C302.616 52.0938 303.96 53.0625 304.96 54.25C305.96 55.4375 306.46 57.0521 306.46 59.0938ZM331.559 33.75V68H326.371V33.75H331.559ZM329.027 20.9375C329.882 20.9375 330.611 21.2188 331.215 21.7812C331.84 22.3229 332.152 23.1771 332.152 24.3438C332.152 25.4896 331.84 26.3438 331.215 26.9062C330.611 27.4688 329.882 27.75 329.027 27.75C328.132 27.75 327.382 27.4688 326.777 26.9062C326.194 26.3438 325.902 25.4896 325.902 24.3438C325.902 23.1771 326.194 22.3229 326.777 21.7812C327.382 21.2188 328.132 20.9375 329.027 20.9375ZM355.124 33.375C358.936 33.375 361.863 34.375 363.905 36.375C365.947 38.375 366.967 41.5104 366.967 45.7812V68H363.842V45.9688C363.842 42.5938 363.072 40.1146 361.53 38.5312C359.988 36.9479 357.749 36.1562 354.811 36.1562C351.082 36.1562 348.228 37.25 346.249 39.4375C344.29 41.6042 343.311 44.8854 343.311 49.2812V68H340.155V34.0312H342.717L343.186 40.2188H343.374C343.978 38.9479 344.801 37.8021 345.842 36.7812C346.905 35.7396 348.207 34.9167 349.749 34.3125C351.29 33.6875 353.082 33.375 355.124 33.375ZM387.72 68.625C383.074 68.625 379.533 67.1667 377.095 64.25C374.678 61.3125 373.47 57.0417 373.47 51.4375C373.47 45.5625 374.751 41.0833 377.314 38C379.876 34.9167 383.449 33.375 388.033 33.375C389.991 33.375 391.689 33.6771 393.126 34.2812C394.585 34.8854 395.803 35.7083 396.783 36.75C397.783 37.7708 398.553 38.9375 399.095 40.25H399.345C399.262 39.1458 399.199 37.9583 399.158 36.6875C399.116 35.4167 399.095 34.25 399.095 33.1875V19.375H402.251V68H399.689L399.283 61.7812H399.095C398.533 63.0312 397.751 64.1771 396.751 65.2188C395.772 66.2604 394.543 67.0938 393.064 67.7188C391.585 68.3229 389.803 68.625 387.72 68.625ZM388.064 65.875C392.064 65.875 394.908 64.6354 396.595 62.1562C398.283 59.6562 399.126 56.0938 399.126 51.4688V50.9688C399.126 46.1771 398.283 42.5104 396.595 39.9688C394.908 37.4062 392.158 36.125 388.345 36.125C384.574 36.125 381.689 37.4375 379.689 40.0625C377.71 42.6875 376.72 46.5 376.72 51.5C376.72 56.2083 377.647 59.7812 379.501 62.2188C381.376 64.6562 384.23 65.875 388.064 65.875ZM423.848 33.375C426.743 33.375 429.15 34.0521 431.066 35.4062C433.004 36.7604 434.441 38.6146 435.379 40.9688C436.337 43.3229 436.816 46.0208 436.816 49.0625V51.3438H412.285C412.285 56.0104 413.358 59.5938 415.504 62.0938C417.67 64.5938 420.764 65.8438 424.785 65.8438C426.889 65.8438 428.712 65.6771 430.254 65.3438C431.816 64.9896 433.545 64.3958 435.441 63.5625V66.4688C433.775 67.2188 432.108 67.7604 430.441 68.0938C428.775 68.4479 426.858 68.625 424.691 68.625C421.254 68.625 418.368 67.9167 416.035 66.5C413.723 65.0625 411.973 63.0417 410.785 60.4375C409.618 57.8333 409.035 54.7917 409.035 51.3125C409.035 47.9167 409.598 44.8646 410.723 42.1562C411.868 39.4479 413.535 37.3125 415.723 35.75C417.931 34.1667 420.639 33.375 423.848 33.375ZM423.816 36.0938C420.566 36.0938 417.931 37.1771 415.91 39.3438C413.91 41.4896 412.733 44.5938 412.379 48.6562H433.535C433.535 46.1771 433.181 43.9896 432.473 42.0938C431.764 40.1979 430.691 38.7292 429.254 37.6875C427.837 36.625 426.025 36.0938 423.816 36.0938ZM451.85 50.5312L440.006 34.0312H443.694L453.756 48.375L463.819 34.0312H467.475L455.725 50.5312L468.225 68H464.506L453.756 52.75L443.069 68H439.444L451.85 50.5312Z" fill="#EEEEEE"/>
+
+            </svg> </span>
+        </a>
+      </div>
+
+      <div class="Header-item Header-item--full Truncate"  style="margin-bottom: 3px;">
+        
+        <div class="color-fg-white px-1 py-1 mt-2 text-light mr-1  hide-sm hide-xs"><b>PROTOCOL</b></div>
+        <div class="py-1 mt-2  mr-1 color-fg-turqGreen hide-sm hide-xs"> DOCS  </div>
+ 
+      </div>
+
+<!--      
+      <div class="Header-item mr-0 mb-1 position-relative pointer-def">
+        <div class="py-1 mt-2  mr-1 color-fg-turqGreen hide-sm hide-xs ci_dex_head pointer-2"> DEX  </div>
+      </div>
+    -->
+  </div>    
+    
+ 
+
+    
+     <div class="container-lg clearfix pt-7"><div class="mx-4"> 
+        <div class="col-12 col-sm-6 float-left">
+          <h1 class="h-Baskerville">White paper</h1>
+        </div>
+        <div class="col-12 col-sm-6 float-left text-sm-right mt-sm-4 color-fg-subtle f5">
+          Last update: 22-01-2022
+        </div>
+    </div> </div>   
+
+    
+    
+    
+    
+    <div class="container-lg clearfix mt-8 mb-2"><div class="mx-4"> 
+      <h2 class="h-Baskerville pb-4" id="introduction">Introduction to Ci 
+        
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  height="16" class="octicons tLink"  ><path d="M14.78 3.653a3.936 3.936 0 115.567 5.567l-3.627 3.627a3.936 3.936 0 01-5.88-.353.75.75 0 00-1.18.928 5.436 5.436 0 008.12.486l3.628-3.628a5.436 5.436 0 10-7.688-7.688l-3 3a.75.75 0 001.06 1.061l3-3z"></path><path d="M7.28 11.153a3.936 3.936 0 015.88.353.75.75 0 001.18-.928 5.436 5.436 0 00-8.12-.486L2.592 13.72a5.436 5.436 0 107.688 7.688l3-3a.75.75 0 10-1.06-1.06l-3 3a3.936 3.936 0 01-5.567-5.568l3.627-3.627z"></path></svg>
+
+      </h2> 
+    </div></div>
+    
+    
+    <div class="container-lg clearfix"> <div class="mx-4"> 
+      <div class="col-1-2 text-justify tx-Baskerville">
+         <p>
+          The <b>Continuous Index Protocol</b> <span class="color-fg-done text-bold">was created with the goal of protect cryptocurrency investment</span> providing a decentralized, anonymous, and secure dynamic economic model.
+           
+          <br><br> 
+          High price volatility, the outcome of a battle between bullish and bearish speculators, has caused concern among most cryptocurrency owners, who fear losing their investment in hours or days.<br><br>
+           
+          There have always been successful investment possibilities in the past, and there will always be profitable investment opportunities in the future; the largest disadvantage has always been risk. Many investors are unable to withstand this pressure and either abandon their investments or lose money. 
+
+          <br><br>
+          Today, new technologies have brought with them the revolutionary idea of managing economic assets digitally and in a decentralized way. They have given investors new and ingenious ways to make their money profitable. But in the centralized financial world there has always been a huge drawback: <strong><b>the problem of price manipulation</b></strong>. 
+            
+          <br><br>
+          Fortunately or unfortunately, until now, the novel decentralized finance or DEFI did not include prices in this decentralization to safeguard them from centralized manipulation by governments, banks or influential people or robotic AI (whales).<br>
+            <br>
+            <b>The changing value of cryptoassets is expressed in currencies of the centralized</b> or <b>real world</b> where tangible and necessary things like food and houses are bought. Therefore, <b>manipulators in the centralized world can also manipulate prices in the decentralized world.</b><br>
+            <br>
+          The manipulation of the markets, their prices and volumes can be accidental or intentional and occurs mainly in two ways:<br>
+          <br>
+          <i class="tx-pink">></i> Through a large investment (buying or selling) of an asset by large portfolios (whales), coming from a robotic algorithm, a human consciousness or an artificial intelligence (AI) consciousness.<br>
+          <i class="tx-pink">></i> By issuing news or communiqués (coming from influential people, governmental organizations or random events).<br>
+          <br>
+          Both <b>drastically volatilize the price</b> leaving many investors, who saw their savings vanish, encouraged to invest them by a promise of the ideal of making quick money.</p>
+      </div>
+    </div></div> 
+      
+    
+    
+
+    <div class="container-lg clearfix mt-8"> <div class="mx-4">     
+      <div class="col-12 text-justify  tx-Baskerville">
+ 
+        <p>
+          <img src="img/bg_sabines_40.jpg" width="100%"><br>
+          <br>
+          <i><b>The Rape of the Sabine Women </b></i><i>is a neoclassical oil on canvas completed in 1799 by Jacques-Louis David</i> .</p><br>
+          
+           
+          <p><i>The main theme of the painting is the intervention of a group of women (<b>Ci protocol</b>) who interpose themselves between the </i><i><b>combatants </b></i><i>(<b>bullish and bearish investors</b>). It is interpreted that the author seeks to promote peace and reconciliation (<b>protect the investor</b>) of the French population after the </i><i><b>Revolution </b></i><i>(<b>of the DEFI</b>).</i><br>
+          <br>
+        </p>      
+        
+      </div>
+     </div></div>
+    
+ 
+    
+    
+    
+    
+    <div class="container-lg clearfix mt-6 mb-2"><div class="mx-4"> 
+      <h2 class="h-Baskerville pb-4" id="achance">A chance for quite  and freedom investments 
+        
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  height="16" class="octicons tLink"  ><path d="M14.78 3.653a3.936 3.936 0 115.567 5.567l-3.627 3.627a3.936 3.936 0 01-5.88-.353.75.75 0 00-1.18.928 5.436 5.436 0 008.12.486l3.628-3.628a5.436 5.436 0 10-7.688-7.688l-3 3a.75.75 0 001.06 1.061l3-3z"></path><path d="M7.28 11.153a3.936 3.936 0 015.88.353.75.75 0 001.18-.928 5.436 5.436 0 00-8.12-.486L2.592 13.72a5.436 5.436 0 107.688 7.688l3-3a.75.75 0 10-1.06-1.06l-3 3a3.936 3.936 0 01-5.567-5.568l3.627-3.627z"></path></svg>
+
+      </h2> 
+    </div></div>
+    
+        
+    
+    
+       
+    <div class="container-lg clearfix"> <div class="mx-4">     
+      <div class="col-1-2 text-justify  tx-Baskerville">
+        
+          <p>The <b>Ci</b> project <b>was born with the aim of providing a solution </b>to this dramatic handicap that seems to haunt the investment world like a curse. Unfortunately, also the cryptographic world, which from the beginning claims to be the solution to the problem of centralization, where "one" could control everything. <br><br>
+            
+            <b>Bitcoin</b>, to a significant extent, <b>addressed critical issues</b> such as <b>decentralization of non-manipulable data and anonymity</b>, but it also perpetuated the &quot;curse&quot; of <b>price manipulation</b> through large capital investments or informational sway <b>by popular news or commentary</b>. A simple &quot;tweet&quot; from a well-known person has been enough to send prices, and even entire crypto projects, into a multi-year bear market.
+            <br><br>
+            
+            <b>This is not beneficial, it is not desirable, and it should not occur.</b> Where we are advocates of blockchain and the concept of decentralization with all the amazing things it has brought to humanity, we have been thinking how to bring a pragmatic solution no matter how much resistance may come at first.
+            <br><br>
+            
+            Although a part of the community is happy with this manipulation issue, because they are obviously profiting from it (as it has already happened and happens in traditional investments), Ci is born to offer one more <strong><b>alternative</b></strong>, as we think that in the innovative crypto world <strong><b>it is necessary to continue evolving the concept of decentralization and financial freedom.</b></strong><br>
+            <br>
+            Some more &quot;aggressive&quot; investors may think that it is a boring and predictable project because they know at all times the trajectory that a price will take. <b>Ci was not built for this type of profile</b>, nor for <b>&quot;whales&quot;</b> (human, robotic or AI) that <b>have fun changing prices at will</b>. On the contrary, <b>Ci was born to protect the crypto investment world from them.</b></p>
+      </div>
+     </div></div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    <div class="container-lg clearfix mt-8 mb-2"><div class="mx-4"> 
+      <h2 class="h-Baskerville pb-4" id="whatisci">What is Ci? 
+        
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  height="16" class="octicons tLink"  ><path d="M14.78 3.653a3.936 3.936 0 115.567 5.567l-3.627 3.627a3.936 3.936 0 01-5.88-.353.75.75 0 00-1.18.928 5.436 5.436 0 008.12.486l3.628-3.628a5.436 5.436 0 10-7.688-7.688l-3 3a.75.75 0 001.06 1.061l3-3z"></path><path d="M7.28 11.153a3.936 3.936 0 015.88.353.75.75 0 001.18-.928 5.436 5.436 0 00-8.12-.486L2.592 13.72a5.436 5.436 0 107.688 7.688l3-3a.75.75 0 10-1.06-1.06l-3 3a3.936 3.936 0 01-5.567-5.568l3.627-3.627z"></path></svg>
+
+      </h2> 
+    </div></div>
+    
+    
+    <div class="container-lg clearfix"> <div class="mx-4"> 
+      <div class="col-12 text-justify tx-Baskerville">
+
+          <p> The Continuous index protocol (or <b>CiP</b> from now on) can be implemented as an <a href="https://github.com/ContinuousIndex/Ci-Protocol-Contract" target="_blank">ERC-20 extended Solidity smart contract</a> on the <b>Ethereum </b>blockchain and other compatible ethereum virtual machine (EVM) networks.
+
+          <br><br>
+
+          CiP make possible an <b>stable and continuously bullish decentralized value </b>based on the <b>simple interest formula</b> to regulate it and avoid an unsustainable bubble over time.
+
+            
+          <br><br><br>
+
+          <div class="f2 text-center" > A = P ( 1 + r * t ) </div>
+
+          <br>
+        
+          <div class="text-center">
+            Where:<br><br>
+
+            A = Total accrued amount (principal + interest)<br>
+            P = Principal investment<br>
+            r = Rate of Interest per second in decimal<br>
+            t = Time period involved in seconds passed <br> 
+          </div>
+        
+          <br><br><br>
+          Warns that Solidity cannot calculate with decimals, therefore the values must be converted to integer previously and set in the smart contract code. This value is fixed and cannot be modified.
+          <br><br>
+          The price of a coin managed by the Ci Protocol ERC-20 extended smart contract, appreciates with <b>each passing second</b> at an interest rate fixed and predetermined in the smart contract.<br>
+          <br>
+
+          <br>
+          The formula for calculating the coin price is simple and can be summarized as follows:
+          <br><br><br>
+          
+          <div class="f2 text-center" > i * r * t </div>
+
+          <br>
+
+        <div class="text-center">
+            Where: <br><br>
+            i = initial investment<br>
+            r = rent per second<br>
+            t = elapsed seconds<br>
+          </div>
+
+          <br><br>
+          
+          
+          The resulting value is based on the immutable and universal variable <b>time</b>, so any person or machine could calculate the price of this crypto-index at any time, being the result of its calculation <b>unmanipulable and unalterable</b>.<br>
+          <br>
+          <b>Neither influential investors nor any kind of event can affect the continuity </b>of the price<b>. </b>This makes it <b>the safest cryptographic security in terms of profitability</b>.<br>
+          <br>
+          <b>These rules are unbreakable </b>and are proctored by the publicly-source smart contract.<br>
+          <br>
+          From anywhere in the world and any Ethereum wallet that connects to that smart contract through its protocol, is possible to trade this hypothetical cryptoasset without intermediaries, without government controls and without the concern of malicious investors negatively affecting the price.
+
+        
+        
+            
+          <br><br><br>
+
+          <h3 class="pb-3" id="selfregulation">Why not a compound interest?</h3>
+        
+          If the protocol were to use compound interest then in a very few years it would create an unsustainable bubble and inevitable bankruptcy. <b>In reality this is what happens every so often with common stocks</b> and other crypto assets. There are "pump and dumps" constantly, some lose so that others gain. <br>
+          By now you will have realized that this is what our project is trying to avoid ;) <br><br>
+ 
+          <div class="text-center my-6"> <img src="img/docs/simple-interest-vs-compound-interest.png" width="80%"  style="opacity: 0.8; border-radius: 10px;"> </div> 
+        
+        
+          With the model based on <b>simple interest</b>, there is a linear increase so smooth that to reach the best market cap that Bitcoin has been in 2021 would take over 400 years in the CiP economic model. It is also known that in 2021 a small percentage of investors acquire Bitcoin (maybe 15%) and in the next few years a real mass explosion in crypto finance is expected. This will greatly increase Ethereum market capital available. <br><br>
+
+          Therefore, the economic model proposed for CiP is dynamically sustained for centuries without the possibility of a "dump" but a very progressive slowdown of the sale time. It is a perfectly acceptable small risk in today's unforgiving financial world. Especially considering that <b>the longer the time with token in possession, the higher the sale value</b>.
+  
+        
+      </div> 
+    </div></div>
+  
+    
+    
+    
+    
+    
+    
+        
+    
+    
+    
+    <div class="container-lg clearfix mt-8 mb-2"><div class="mx-4"> 
+      <h2 class="h-Baskerville pb-4" id="fundamentals">Fundamentals of hypothetical token 
+        
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  height="16" class="octicons tLink"><path d="M14.78 3.653a3.936 3.936 0 115.567 5.567l-3.627 3.627a3.936 3.936 0 01-5.88-.353.75.75 0 00-1.18.928 5.436 5.436 0 008.12.486l3.628-3.628a5.436 5.436 0 10-7.688-7.688l-3 3a.75.75 0 001.06 1.061l3-3z"></path><path d="M7.28 11.153a3.936 3.936 0 015.88.353.75.75 0 001.18-.928 5.436 5.436 0 00-8.12-.486L2.592 13.72a5.436 5.436 0 107.688 7.688l3-3a.75.75 0 10-1.06-1.06l-3 3a3.936 3.936 0 01-5.567-5.568l3.627-3.627z"></path></svg>
+
+      </h2> 
+    </div></div>
+    
+    
+    <div class="container-lg clearfix"> <div class="mx-4"> 
+      <div class="col-12 text-justify tx-Baskerville">
+
+          A token based on CiP ERC-20 extended contract is founded with features that make it special and different from any other cryptoasset available in the crypto universe. 
+        
+          <br><br><br>
+        
+          <h3 class="pb-3" id="selfregulation">Self-Regulation 
+
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  height="16" class="octicons tLink"><path d="M14.78 3.653a3.936 3.936 0 115.567 5.567l-3.627 3.627a3.936 3.936 0 01-5.88-.353.75.75 0 00-1.18.928 5.436 5.436 0 008.12.486l3.628-3.628a5.436 5.436 0 10-7.688-7.688l-3 3a.75.75 0 001.06 1.061l3-3z"></path><path d="M7.28 11.153a3.936 3.936 0 015.88.353.75.75 0 001.18-.928 5.436 5.436 0 00-8.12-.486L2.592 13.72a5.436 5.436 0 107.688 7.688l3-3a.75.75 0 10-1.06-1.06l-3 3a3.936 3.936 0 01-5.567-5.568l3.627-3.627z"></path></svg>
+
+          </h3>         
+        
+        
+          The minting of the token is regulated by supply and demand, but not in the way most cryptoassets operate. <br>
+
+          <b>The default amount supplied is zero</b>.<br> 
+
+          It is minted depending on supply and demand from owners, but under special rules that make it different.<br><br>
+
+          <b>It is not minted as long as only one owner has the token for sale</b>, therefore, the amount of total supply will not increase as long as there is only one owner with tokens for sale.<br><br>
+          
+          This is  the key to <b>maintaining the real value</b>, self-regulating and valuable over time despite its constant revaluation <br><br>
+                    
+          However, because the concept is new, the creator of the contract could reserves the right to limit the max supply or stop minting to increase the intrinsic value of the project (not of the coin that constantly revalues over time). This in turn would benefit its owners and making it in a scarce security that many wish to own.
+      
+      
+        
+          <br><br><br>
+        
+        <h3 class="pb-3" id="continuity">The Continuity and Stability
+
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  height="16" class="octicons tLink"><path d="M14.78 3.653a3.936 3.936 0 115.567 5.567l-3.627 3.627a3.936 3.936 0 01-5.88-.353.75.75 0 00-1.18.928 5.436 5.436 0 008.12.486l3.628-3.628a5.436 5.436 0 10-7.688-7.688l-3 3a.75.75 0 001.06 1.061l3-3z"></path><path d="M7.28 11.153a3.936 3.936 0 015.88.353.75.75 0 001.18-.928 5.436 5.436 0 00-8.12-.486L2.592 13.72a5.436 5.436 0 107.688 7.688l3-3a.75.75 0 10-1.06-1.06l-3 3a3.936 3.936 0 01-5.567-5.568l3.627-3.627z"></path></svg>
+
+          </h3>
+      
+          The suggested initial value of the a CiP token, like any other stable coin, started with an equivalence of 1 ETH (or network native coin) as the reference currency in the smart contract.
+          
+          <br><br>
+          This initial value is established on a specific date expressed in  <span ><a href="https://www.unixtimestamp.com/" target="_blank">UNIX Timestamp</a></span> format.
+          <br><br>
+                  
+          From that moment <b>the price of the asset is revaluing at x% simple interest rate every second that passes, with no reversals and forever</b> as it is established by the Ci protocol.
+          
+          <br><br>
+          To calculate the current price  we only need the simple interest formula and two data, the start date and the end date (current date) in <span ><a href="https://www.unixtimestamp.com/" target="_blank">UNIX Timestamp</a></span> format.
+            
+          <br><br>
+          <div class="mb-2"><b>Solidity:</b></div>
+      
+        <pre class="prettyprint f5 Box p-3 color-bg-emphasis">function CurrentCoinPrice() public view returns (uint){
+                        uint secondsPassed = block.timestamp - InitTimeStamp;        
+                        uint secondRate = x; //Unknow for this example
+                        return 1000000000000000000 + secondsPassed * secondRate;
+                    }
+          </pre>  
+           
+            
+            
+          <br><br>
+          The curent price of the asset can be called to the smart contract from a DWeb:
+      
+          <br><br>
+          <div class="mb-2"><b>Web3.js:</b></div>
+      
+        <pre class="prettyprint f5 Box p-3 color-bg-emphasis">contract.methods.CurrentCoinPrice().call().then(price =>{
+                 /*The price will be returned in a native wei uint*/
+              })
+          </pre>       
+
+
+      
+      
+      
+        
+          <br><br><br>
+        
+          <h3 class="pb-3" id="anonymity">Anonymity
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  height="16" class="octicons tLink"><path d="M14.78 3.653a3.936 3.936 0 115.567 5.567l-3.627 3.627a3.936 3.936 0 01-5.88-.353.75.75 0 00-1.18.928 5.436 5.436 0 008.12.486l3.628-3.628a5.436 5.436 0 10-7.688-7.688l-3 3a.75.75 0 001.06 1.061l3-3z"></path><path d="M7.28 11.153a3.936 3.936 0 015.88.353.75.75 0 001.18-.928 5.436 5.436 0 00-8.12-.486L2.592 13.72a5.436 5.436 0 107.688 7.688l3-3a.75.75 0 10-1.06-1.06l-3 3a3.936 3.936 0 01-5.567-5.568l3.627-3.627z"></path></svg>
+
+          </h3>
+      
+            The frontend that manages the contract does not need to create accounts, collect personal data, or store any data in centralized databases. The only data that  smart contract manages is its anonymous wallet and balances.
+
+      
+      
+      
+        
+          <br><br><br>
+        
+        <h3 class="pb-3" id="transferability">Transferability
+
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  height="16" class="octicons tLink"><path d="M14.78 3.653a3.936 3.936 0 115.567 5.567l-3.627 3.627a3.936 3.936 0 01-5.88-.353.75.75 0 00-1.18.928 5.436 5.436 0 008.12.486l3.628-3.628a5.436 5.436 0 10-7.688-7.688l-3 3a.75.75 0 001.06 1.061l3-3z"></path><path d="M7.28 11.153a3.936 3.936 0 015.88.353.75.75 0 001.18-.928 5.436 5.436 0 00-8.12-.486L2.592 13.72a5.436 5.436 0 107.688 7.688l3-3a.75.75 0 10-1.06-1.06l-3 3a3.936 3.936 0 01-5.567-5.568l3.627-3.627z"></path></svg>
+
+          </h3>
+      
+            A CiP token can be transferred at any time to any Ethereum network compatible wallet where you trade, without any commission from the smart contract.
+
+      
+          
+            
+        
+          <br><br><br>
+        
+          <h3 class="pb-3" id="commissions">Commissions
+
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  height="16" class="octicons tLink"><path d="M14.78 3.653a3.936 3.936 0 115.567 5.567l-3.627 3.627a3.936 3.936 0 01-5.88-.353.75.75 0 00-1.18.928 5.436 5.436 0 008.12.486l3.628-3.628a5.436 5.436 0 10-7.688-7.688l-3 3a.75.75 0 001.06 1.061l3-3z"></path><path d="M7.28 11.153a3.936 3.936 0 015.88.353.75.75 0 001.18-.928 5.436 5.436 0 00-8.12-.486L2.592 13.72a5.436 5.436 0 107.688 7.688l3-3a.75.75 0 10-1.06-1.06l-3 3a3.936 3.936 0 01-5.567-5.568l3.627-3.627z"></path></svg>
+
+          </h3>
+          
+            There are no commissions for buying or transferring CiP token. The commission per sale will occur only once the tokens are sold and you have been paid in ETH (or native currency of the network in which you operate) the value equivalent to the current price for the amount of token sold. The standard commission per sale is established by the smart contract owner and can be called.
+
+                  
+        
+          <br><br><br>
+        
+        <h3 class="pb-3" id="security">Security
+
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  height="16" class="octicons tLink"><path d="M14.78 3.653a3.936 3.936 0 115.567 5.567l-3.627 3.627a3.936 3.936 0 01-5.88-.353.75.75 0 00-1.18.928 5.436 5.436 0 008.12.486l3.628-3.628a5.436 5.436 0 10-7.688-7.688l-3 3a.75.75 0 001.06 1.061l3-3z"></path><path d="M7.28 11.153a3.936 3.936 0 015.88.353.75.75 0 001.18-.928 5.436 5.436 0 00-8.12-.486L2.592 13.72a5.436 5.436 0 107.688 7.688l3-3a.75.75 0 10-1.06-1.06l-3 3a3.936 3.936 0 01-5.567-5.568l3.627-3.627z"></path></svg>
+
+          </h3>
+      
+          CiP's token constant revaluation of value per contract, make it <b>the most secure as well as profitable cryptocurrency or cryptoasset in known history</b>. In addition, it is based on a public-code smart contract that the <b>Ethereum</b> network (or others compatible with its EVM) manages in a decentralized way, so you with your wallet private key have full control of the management of your tokens.
+
+      
+      
+                        
+        
+          <br><br><br>
+        
+          <h3 class="pb-3" id="governance">Governance
+
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  height="16" class="octicons tLink"><path d="M14.78 3.653a3.936 3.936 0 115.567 5.567l-3.627 3.627a3.936 3.936 0 01-5.88-.353.75.75 0 00-1.18.928 5.436 5.436 0 008.12.486l3.628-3.628a5.436 5.436 0 10-7.688-7.688l-3 3a.75.75 0 001.06 1.061l3-3z"></path><path d="M7.28 11.153a3.936 3.936 0 015.88.353.75.75 0 001.18-.928 5.436 5.436 0 00-8.12-.486L2.592 13.72a5.436 5.436 0 107.688 7.688l3-3a.75.75 0 10-1.06-1.06l-3 3a3.936 3.936 0 01-5.567-5.568l3.627-3.627z"></path></svg>
+
+          </h3>
+        
+          The value of token is marked by the <span ><a href="https://www.unixtimestamp.com/" target="_blank">UNIX Time-stamp </a></span> of GMT (Greenwich Mean Time) or Coordinated Universal Time or UTC+0.
+        
+          <br><br>
+          Neither the smart contract, nor the creator of the contract, nor the owners, nor the agents have any power or control over its price. Since all the information of all the operations of the smart contract that manages it and its code are public, we could then state that there is no decision that is going to affect its price.
+          
+          <br><br>
+          Smart contract are audited and publicly deployed in a EVM blockchains. In reality the Ci protocol is finished and does not need to make transcendental changes that would negatively affect its owners, however if any decision were to be made that would affect the  token and/or its owners or agents, it would be consulted and decision would be made based on anonymous voting of all its owners.
+ 
+        
+        
+      </div> 
+    </div></div>
+  
+    
+    
+      
+    
+    
+    <div class="container-lg clearfix mt-8 mb-2"><div class="mx-4"> 
+      <h2 class="h-Baskerville pb-4" id="creator">About the founder 
+        
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"  height="16" class="octicons tLink"><path d="M14.78 3.653a3.936 3.936 0 115.567 5.567l-3.627 3.627a3.936 3.936 0 01-5.88-.353.75.75 0 00-1.18.928 5.436 5.436 0 008.12.486l3.628-3.628a5.436 5.436 0 10-7.688-7.688l-3 3a.75.75 0 001.06 1.061l3-3z"></path><path d="M7.28 11.153a3.936 3.936 0 015.88.353.75.75 0 001.18-.928 5.436 5.436 0 00-8.12-.486L2.592 13.72a5.436 5.436 0 107.688 7.688l3-3a.75.75 0 10-1.06-1.06l-3 3a3.936 3.936 0 01-5.567-5.568l3.627-3.627z"></path></svg>
+
+      </h2> 
+    </div></div>
+    
+    
+    <div class="container-lg clearfix"> <div class="mx-4"> 
+      <div class="col-12 text-justify tx-Baskerville">
+        
+      The Ci Protocol project is the brainchild and product of programmer <span ><a href="https://hermesateneo.medium.com/" target="_blank">Hermes Ateneo</a></span>, who developed it to provide a practical solution to a financial dualism existing in the crypto world, where either the investment is exposed to high volatility, or the investment is stuck in a stable cryptocurrency.
+      
+      <br><br>
+        
+      Probing into the concerns and desires of most investors he found that security and peace of mind were, behind profitability, the second most sought after but least obtained factor.
+        
+      <br><br>
+        
+      <b>Bitcoin</b> and <b>Ethereum's</b> blockchains provided security and decentralization, which others replicated for profit. Neither, on the other hand, provided a breakthrough on the subject of values manipulation.
+        
+      <br><br>
+        
+      Hermes believed that investing in cryptoassets may provide even more freedom if prices could be secured against the manipulation that &quot;powerful&quot; people can always engage in.<br>
+      This gave Hermes the concept for CiP, which he developed and made available to the general public.
+        
+      <br><br><br>
+        
+      <i class="f4">"I recognize that Ci is a different concept that at the beginning will unleash some rejection, but I have the conviction that it could be very useful as a main asset for the exchange of products and services thanks to its two great qualities, stability and double security, that of the Ethereum network and that of its profitability."</i>
+        
+      <br><br> <i>Hermes Ateneo_</i>
+      
+      </div> 
+    </div></div>
+  
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+
+  <!--Container footer lg -->
+  <div class="container-lg mt-8 mb-3">
+    <div class="mx-3">    
+
+
+
+      <div class="col-12 f5">
+       <b><a href="https://github.com/HermesAteneo/Protected-Public-Source-License-PPSL">&lt;PPS/&gt;</a> All</b> the codes of the <b>Ci Protocol project</b> (as well the original designs) are public but <b>protected</b> by the <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/" target="_blank"> 4.0 "CC" or Creative Commons license</a> and  <span class="text-small"> <a href="https://github.com/HermesAteneo/Protected-Public-Source-License-PPSL">&lt;PPS/&gt; (Protected Public Source License)</a></span>
+      </div><!--col-->   
+
+
+      <div class="col-12 mt-5  mb-2 f5 text-right color-fg-default">
+            <a href="https://github.com/ContinuousIndex/" target="_blank" class="color-fg-default"> 
+                <svg class="octicon mr-1" width="18" height="18" viewBox="0 0 1024 1024" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8C0 11.54 2.29 14.53 5.47 15.59C5.87 15.66 6.02 15.42 6.02 15.21C6.02 15.02 6.01 14.39 6.01 13.72C4 14.09 3.48 13.23 3.32 12.78C3.23 12.55 2.84 11.84 2.5 11.65C2.22 11.5 1.82 11.13 2.49 11.12C3.12 11.11 3.57 11.7 3.72 11.94C4.44 13.15 5.59 12.81 6.05 12.6C6.12 12.08 6.33 11.73 6.56 11.53C4.78 11.33 2.92 10.64 2.92 7.58C2.92 6.71 3.23 5.99 3.74 5.43C3.66 5.23 3.38 4.41 3.82 3.31C3.82 3.31 4.49 3.1 6.02 4.13C6.66 3.95 7.34 3.86 8.02 3.86C8.7 3.86 9.38 3.95 10.02 4.13C11.55 3.09 12.22 3.31 12.22 3.31C12.66 4.41 12.38 5.23 12.3 5.43C12.81 5.99 13.12 6.7 13.12 7.58C13.12 10.65 11.25 11.33 9.47 11.53C9.76 11.78 10.01 12.26 10.01 13.01C10.01 14.08 10 14.94 10 15.21C10 15.42 10.15 15.67 10.55 15.59C13.71 14.53 16 11.53 16 8C16 3.58 12.42 0 8 0Z" transform="scale(64)"/>
+                </svg>
+                <svg class="octicon" viewBox="0 0 45 16" width="45" height="16"><path fill-rule="evenodd" d="M18.53 12.03h-.02c.009 0 .015.01.024.011h.006l-.01-.01zm.004.011c-.093.001-.327.05-.574.05-.78 0-1.05-.36-1.05-.83V8.13h1.59c.09 0 .16-.08.16-.19v-1.7c0-.09-.08-.17-.16-.17h-1.59V3.96c0-.08-.05-.13-.14-.13h-2.16c-.09 0-.14.05-.14.13v2.17s-1.09.27-1.16.28c-.08.02-.13.09-.13.17v1.36c0 .11.08.19.17.19h1.11v3.28c0 2.44 1.7 2.69 2.86 2.69.53 0 1.17-.17 1.27-.22.06-.02.09-.09.09-.16v-1.5a.177.177 0 00-.146-.18zM42.23 9.84c0-1.81-.73-2.05-1.5-1.97-.6.04-1.08.34-1.08.34v3.52s.49.34 1.22.36c1.03.03 1.36-.34 1.36-2.25zm2.43-.16c0 3.43-1.11 4.41-3.05 4.41-1.64 0-2.52-.83-2.52-.83s-.04.46-.09.52c-.03.06-.08.08-.14.08h-1.48c-.1 0-.19-.08-.19-.17l.02-11.11c0-.09.08-.17.17-.17h2.13c.09 0 .17.08.17.17v3.77s.82-.53 2.02-.53l-.01-.02c1.2 0 2.97.45 2.97 3.88zm-8.72-3.61h-2.1c-.11 0-.17.08-.17.19v5.44s-.55.39-1.3.39-.97-.34-.97-1.09V6.25c0-.09-.08-.17-.17-.17h-2.14c-.09 0-.17.08-.17.17v5.11c0 2.2 1.23 2.75 2.92 2.75 1.39 0 2.52-.77 2.52-.77s.05.39.08.45c.02.05.09.09.16.09h1.34c.11 0 .17-.08.17-.17l.02-7.47c0-.09-.08-.17-.19-.17zm-23.7-.01h-2.13c-.09 0-.17.09-.17.2v7.34c0 .2.13.27.3.27h1.92c.2 0 .25-.09.25-.27V6.23c0-.09-.08-.17-.17-.17zm-1.05-3.38c-.77 0-1.38.61-1.38 1.38 0 .77.61 1.38 1.38 1.38.75 0 1.36-.61 1.36-1.38 0-.77-.61-1.38-1.36-1.38zm16.49-.25h-2.11c-.09 0-.17.08-.17.17v4.09h-3.31V2.6c0-.09-.08-.17-.17-.17h-2.13c-.09 0-.17.08-.17.17v11.11c0 .09.09.17.17.17h2.13c.09 0 .17-.08.17-.17V8.96h3.31l-.02 4.75c0 .09.08.17.17.17h2.13c.09 0 .17-.08.17-.17V2.6c0-.09-.08-.17-.17-.17zM8.81 7.35v5.74c0 .04-.01.11-.06.13 0 0-1.25.89-3.31.89-2.49 0-5.44-.78-5.44-5.92S2.58 1.99 5.1 2c2.18 0 3.06.49 3.2.58.04.05.06.09.06.14L7.94 4.5c0 .09-.09.2-.2.17-.36-.11-.9-.33-2.17-.33-1.47 0-3.05.42-3.05 3.73s1.5 3.7 2.58 3.7c.92 0 1.25-.11 1.25-.11v-2.3H4.88c-.11 0-.19-.08-.19-.17V7.35c0-.09.08-.17.19-.17h3.74c.11 0 .19.08.19.17z"></path></svg>
+                <span class="hide-sm hide-xs">repository</span>
+            </a>
+            &nbsp; 
+            <a href="http://continuousindex.org/" target="_blank" class="color-fg-default" translate="no"> 
+                <img src="img/icos-coins/CI.png" height="19" class="octicon">
+                <b>C</b>ontinuous<b>i</b>ndex.org
+            </a>
+
+            &nbsp; 
+
+            <a href="https://twitter.com/ContinuousIndex" target="_blank" class="color-fg-default"> 
+              <svg height="17" class="octicon mr-1" viewBox="0 0 24 24"><path fill="#018AFC" d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/></svg><b>Twitter</b> <span class="hide-sm hide-xs">channel</span>
+            </a>
+        
+      </div><!--col-->
+
+
+      </div><!--mx-3-->
+  </div>
+
+    
+    
+    
+    
+    
+</div><!--AllContent-->  
+  
+</body>
+</html>
